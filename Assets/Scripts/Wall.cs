@@ -9,8 +9,11 @@ public class Wall : MonoBehaviour {
 
     private SpriteRenderer spriteRenderer;
 
-	// Use this for initialization
-	void Awake () {
+    public AudioClip chopSound1;
+    public AudioClip chopSound2;
+
+    // Use this for initialization
+    void Awake () {
         spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
@@ -20,6 +23,8 @@ public class Wall : MonoBehaviour {
         hp -= loss;
         if (hp <= 0)
             gameObject.SetActive(false);
+
+        SoundManager.instance.RandomizeSfx(chopSound1, chopSound2);
     }
 	
 	
