@@ -43,12 +43,12 @@ public class GameManager : MonoBehaviour {
         InitGame();
     }
 
-    private void OnLevelWasLoaded(int level)
-    {
-        level++;
-        InitGame();
+    //private void OnLevelWasLoaded(int level)
+    //{
+    //    instance.level++;
+    //    instance.InitGame();
 
-    }
+    //}
 
     //private void OnlevelFinishedLoading(Scene scene, LoadSceneMode mode)
     //{
@@ -60,13 +60,29 @@ public class GameManager : MonoBehaviour {
     //{//Tell our ‘OnLevelFinishedLoading’ function to start listening for a scene change event as soon as this script is enabled.
     //    SceneManager.sceneLoaded += OnlevelFinishedLoading;
 
-    //        //+= OnLevelFinishedLoading;
+    //    //+= OnLevelFinishedLoading;
     //}
 
     //private void OnDisable()
     //{
     //    SceneManager.sceneLoaded -= OnlevelFinishedLoading;
     //}
+
+    //this is called only once, and the paramter tell it to be called only after the scene was loaded
+    //(otherwise, our Scene Load callback would be called the very first load, and we don't want that)
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    static public void CallbackInitialization()
+    {
+        //register the callback to be called everytime the scene is loaded
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    //This is called each time a scene is loaded.
+    static private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        instance.level++;
+        instance.InitGame();
+    }
 
 
     void InitGame()
